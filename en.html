@@ -4,6 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Nikolai Irtuganov | Fullstack Developer</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg"/>
 <meta name="description" content="Nikolai Irtuganov — Fullstack Developer at Sber. 12+ years in IT: web, mobile and desktop apps, API design, automation. From idea to production."/>
 <meta name="keywords" content="fullstack developer, Nikolai Irtuganov, Sber, Android, Kotlin, React, Next.js, web development, mobile development, freelance developer"/>
 <!-- Open Graph -->
@@ -115,6 +116,37 @@
     .dark .timeline-dot::before {
       background-color: #1e293b;
     }
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Back to top button */
+    #back-to-top {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    #back-to-top.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    /* Typing cursor */
+    .typing-cursor::after {
+      content: '|';
+      animation: blink 0.7s infinite;
+      color: #4d65ff;
+      font-weight: 400;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
   </style>
 <script>
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -134,6 +166,7 @@
 <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600 dark:text-slate-400">
 <a class="hover:text-accent transition-colors" href="#about">About</a>
 <a class="hover:text-accent transition-colors" href="#experience">Experience</a>
+<a class="hover:text-accent transition-colors" href="#achievements">Achievements</a>
 <a class="hover:text-accent transition-colors" href="#services">Services</a>
 <a class="hover:text-accent transition-colors" href="#portfolio">Projects</a>
 <a class="hover:text-accent transition-colors" href="#contact">Contact</a>
@@ -156,6 +189,7 @@
 <div class="flex flex-col px-4 py-4 space-y-1">
 <a class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 dark:text-slate-400 hover:text-accent hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors" href="#about">About</a>
 <a class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 dark:text-slate-400 hover:text-accent hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors" href="#experience">Experience</a>
+<a class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 dark:text-slate-400 hover:text-accent hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors" href="#achievements">Achievements</a>
 <a class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 dark:text-slate-400 hover:text-accent hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors" href="#services">Services</a>
 <a class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 dark:text-slate-400 hover:text-accent hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors" href="#portfolio">Projects</a>
 <a class="px-4 py-3 rounded-lg text-sm font-medium text-gray-600 dark:text-slate-400 hover:text-accent hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors" href="#contact">Contact</a>
@@ -170,9 +204,7 @@
 <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-8">
           Building IT solutions of any complexity — <span class="text-accent">from idea to product</span>
 </h1>
-<p class="text-lg md:text-xl text-gray-500 dark:text-slate-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-          12+ years in software development. Scientific background, enterprise experience, teaching. Full cycle — from architecture to production.
-        </p>
+<p id="typing-text" class="text-lg md:text-xl text-gray-500 dark:text-slate-400 mb-12 max-w-3xl mx-auto leading-relaxed typing-cursor" data-text="12+ years in software development. Scientific background, enterprise experience, teaching. Full cycle — from architecture to production."></p>
 <div class="flex justify-center">
 <a class="inline-flex items-center px-8 py-4 bg-accent text-white font-semibold rounded-full shadow-lg shadow-blue-200 dark:shadow-accent/20 hover:shadow-xl hover:-translate-y-1 transition-all animate-pulse-slow" href="#contact">
             Get in touch
@@ -183,7 +215,7 @@
 </section>
 <!-- END: HeroSection -->
 <!-- BEGIN: AboutSection -->
-<section class="py-24" id="about">
+<section class="py-24 fade-in" id="about">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="grid md:grid-cols-2 gap-12 items-center md:grid-cols-[2fr_3fr]">
 <div class="relative max-w-sm mx-auto md:mx-0">
@@ -191,7 +223,7 @@
 <img alt="Nikolai Irtuganov" class="w-full h-full object-cover object-[center_25%]" src="photo.jpeg"/>
 </div>
 <div class="absolute -bottom-6 -right-6 bg-white dark:bg-slate-800 p-6 rounded-xl shadow-xl hidden md:block">
-<p class="text-3xl font-bold text-accent">12+</p>
+<p class="text-3xl font-bold text-accent"><span class="counter" data-target="12">0</span>+</p>
 <p class="text-sm text-gray-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Years in IT</p>
 </div>
 </div>
@@ -213,8 +245,32 @@
 </div>
 </section>
 <!-- END: AboutSection -->
+<!-- BEGIN: CountersSection -->
+<section class="py-16 fade-in">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+<div>
+<p class="text-4xl md:text-5xl font-extrabold text-accent"><span class="counter" data-target="12">0</span>+</p>
+<p class="text-sm text-gray-500 dark:text-slate-400 mt-2 uppercase tracking-wider font-semibold">Years in IT</p>
+</div>
+<div>
+<p class="text-4xl md:text-5xl font-extrabold text-accent"><span class="counter" data-target="3">0</span>+</p>
+<p class="text-sm text-gray-500 dark:text-slate-400 mt-2 uppercase tracking-wider font-semibold">Years at Sber</p>
+</div>
+<div>
+<p class="text-4xl md:text-5xl font-extrabold text-accent"><span class="counter" data-target="10">0</span></p>
+<p class="text-sm text-gray-500 dark:text-slate-400 mt-2 uppercase tracking-wider font-semibold">Years in Education</p>
+</div>
+<div>
+<p class="text-4xl md:text-5xl font-extrabold text-accent"><span class="counter" data-target="6">0</span></p>
+<p class="text-sm text-gray-500 dark:text-slate-400 mt-2 uppercase tracking-wider font-semibold">Expertise Areas</p>
+</div>
+</div>
+</div>
+</section>
+<!-- END: CountersSection -->
 <!-- BEGIN: ExperienceAndEducationSection -->
-<section class="py-24" id="experience">
+<section class="py-24 fade-in" id="experience">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
 <!-- Education Column -->
@@ -269,7 +325,7 @@
 </section>
 <!-- END: ExperienceAndEducationSection -->
 <!-- BEGIN: AchievementsSection -->
-<section class="py-24" id="achievements">
+<section class="py-24 fade-in" id="achievements">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <h2 class="text-3xl font-bold mb-12 text-center">Achievements</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -328,7 +384,7 @@ RTU MIREA
 </section>
 <!-- END: AchievementsSection -->
 <!-- BEGIN: ServicesSection -->
-<section class="py-24" id="services">
+<section class="py-24 fade-in" id="services">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <h2 class="text-3xl font-bold mb-16 text-center">Services & Expertise</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -383,7 +439,7 @@ RTU MIREA
 </div>
 </div>
 </section>
-<section class="py-24" id="portfolio">
+<section class="py-24 fade-in" id="portfolio">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <h2 class="text-3xl font-bold mb-16 text-center">Projects</h2>
 <div class="max-w-2xl mx-auto">
@@ -408,7 +464,7 @@ RTU MIREA
 </section>
 <!-- END: ServicesSection -->
 <!-- BEGIN: SkillsSection -->
-<section class="py-24" id="skills">
+<section class="py-24 fade-in" id="skills">
 <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 <h2 class="text-3xl font-bold mb-16 text-center">Tech Stack</h2>
 <div class="space-y-10">
@@ -459,7 +515,7 @@ RTU MIREA
 </section>
 <!-- END: SkillsSection -->
 <!-- BEGIN: ContactSection -->
-<section class="py-24 bg-dark dark:bg-slate-950 text-white overflow-hidden relative" id="contact">
+<section class="py-24 bg-dark dark:bg-slate-950 text-white overflow-hidden relative fade-in" id="contact">
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
 <h2 class="text-4xl md:text-5xl font-bold mb-8">Let's work together</h2>
 <p class="text-gray-400 text-lg mb-12">
@@ -485,6 +541,10 @@ RTU MIREA
 </section>
 <!-- END: ContactSection -->
 </main>
+<!-- Back to Top Button -->
+<button id="back-to-top" class="fixed bottom-8 right-8 z-50 p-3 bg-accent text-white rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all" aria-label="Back to top">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+</button>
 <!-- BEGIN: Footer -->
 <footer class="py-12 border-t border-gray-100 dark:border-slate-800 bg-[#f0f4f8] dark:bg-[#0b1120] transition-colors">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -518,6 +578,95 @@ RTU MIREA
       burgerIcon.classList.remove('hidden');
       closeIcon.classList.add('hidden');
     });
+  });
+
+  // Typing effect
+  const typingEl = document.getElementById('typing-text');
+  const text = typingEl.dataset.text;
+  let i = 0;
+  const type = () => {
+    if (i < text.length) {
+      typingEl.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 30);
+    } else {
+      typingEl.classList.remove('typing-cursor');
+    }
+  };
+  type();
+
+  // Active menu highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a[href^="#"], #mobile-menu a[href^="#"]');
+
+  const highlightNav = () => {
+    const scrollY = window.scrollY + 100;
+    const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 50;
+    let activeId = null;
+
+    if (atBottom) {
+      activeId = 'contact';
+    } else {
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        if (scrollY >= top && scrollY < top + height) {
+          activeId = section.getAttribute('id');
+        }
+      });
+    }
+
+    navLinks.forEach(link => {
+      link.classList.remove('text-accent', 'font-bold', 'border-b-2', 'border-accent', 'pb-1');
+      if (link.getAttribute('href') === '#' + activeId) {
+        link.classList.add('text-accent', 'font-bold', 'border-b-2', 'border-accent', 'pb-1');
+      }
+    });
+  };
+  window.addEventListener('scroll', highlightNav);
+  highlightNav();
+
+  // Scroll fade-in animations
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+  // Counter animation
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counter = entry.target;
+        const target = +counter.dataset.target;
+        const duration = 1500;
+        const start = performance.now();
+        const animate = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          counter.textContent = Math.floor(eased * target);
+          if (progress < 1) requestAnimationFrame(animate);
+          else counter.textContent = target;
+        };
+        requestAnimationFrame(animate);
+        counterObserver.unobserve(counter);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+  // Back to top button
+  const backToTop = document.getElementById('back-to-top');
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('show', window.scrollY > 400);
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 </script>
 </body></html>
